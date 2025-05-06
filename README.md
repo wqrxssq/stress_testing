@@ -18,7 +18,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 ├── SmartSolution.cpp         # High‑performance solution under test
 ├── Generator.cpp             # User‑provided test‑case generator
 ├── StandartChecker.cpp       # Standart checker for problems (One answer for each test)
-├── AdvancedCheker            # (Optional) Custom checker for advanced problems (Multiple answers for each test)
+├── AdvancedCheker.cpp        # (Optional) Custom checker for advanced problems (Multiple answers for each test)
 └── StressTestRunner.cpp      # Main shell
 
 ````
