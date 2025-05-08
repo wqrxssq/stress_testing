@@ -9,12 +9,12 @@ using namespace std;
 
 int main() {
     ifstream input("tests/in.txt");
-    ifstream stupid("tests/out_stupid.txt");
-    ifstream smart("tests/out_smart.txt");
+    ifstream stupid("tests/naiveOut.txt");
+    ifstream smart("tests/smartOut.txt");
 
     if (!input.is_open() || !stupid.is_open() || !smart.is_open()) {
         cerr << "Checker error: cannot open one of the files.\n";
-        return 1;
+        return 2;
     }
 
     // read all non-whitespace tokens from each output
