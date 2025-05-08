@@ -50,7 +50,7 @@ Use a custom checker (for problems with multiple valid outputs):
 
 1) Exactly the same as in the basic mode
 
-2) Edit 'AdvancedChecker.cpp' - In it you should have files 'test.txt', 'smartOut.txt', 'naiveOut.txt' to check the correctness of each, and then compare their results, for more understanding see the original example in AdvancedChecker.cpp.
+2) Edit `AdvancedChecker.cpp` - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in AdvancedChecker.cpp.
 
 3) Run the following command in terminal:
 
@@ -72,25 +72,25 @@ Also you can use this command for basic mode:
 build/stress <path/to/naive> <path/to/smart> <path/to/generator>
 ```
 
-* `argv[1]` — path to the **correct** (naive) solution
-* `argv[2]` — path to the **tested** (smart) solution
-* `argv[3]` — path to the **test generator**
+- `argv[1]` — path to the **correct** (naive) solution
+- `argv[2]` — path to the **tested** (smart) solution
+- `argv[3]` — path to the **test generator**
 
 And for advanced mode:
 
 ```bash
-build/stress <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker> -a
+/build/stress <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker> -a
 ```
 
-* `argv[4]` — path to the **checker** executable
-* `-a` flag enables checker‑based verdicts
+- `argv[4]` — path to the **checker** executable
+- `-a` flag enables checker‑based verdicts
 
 #### Logs
 
-If you want to get statistics for usage, run the command:
+If you want to get statistics of usage, run the command:
 
 ```bash
-build/stress -logs
+/build/stress -logs
 ```
 
 ---
