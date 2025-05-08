@@ -49,7 +49,7 @@ void printProgress(int test, int every_piece) {
     for (int i = done_pieces; i < PIECES; i++) {
         cerr << ".....";
     }
-    cerr << 10 * done_pieces << "% ]\n";
+    cerr << 10 * done_pieces << "%]\n";
 }
 
 void printFile(ifstream& file) {
@@ -160,7 +160,8 @@ int main(int argc, char ** argv) {
 
     // Advanced mode
     case 2: {
-        if (argv[1] == "-a" || argv[1] == "-advanced") {
+        string flag = argv[1];
+        if (flag == "-a" || flag == "-advanced") {
             StressTesting Stress{true};
             Stress.startStress();
         } else {
@@ -181,7 +182,8 @@ int main(int argc, char ** argv) {
 
     // Advanced mode with own files
     case 6: {
-        if (argv[1] != "-a") {
+        string flag = argv[1];
+        if (flag != "-a") {
             throwFormatError();
         } else {
             string correct_sol_name = argv[2];
