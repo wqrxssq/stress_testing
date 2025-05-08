@@ -9,7 +9,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 
 ---
 
-### 📦 Project Structure
+### Project Structure
 
 ```markdown
 
@@ -25,7 +25,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 
 ---
 
-### 🚀 Usage
+### Usage
 
 #### Basic Mode
 
@@ -95,7 +95,7 @@ If you want to get statistics of usage, run the command:
 
 ---
 
-### ⚙️ How It Works
+### How It Works
 
 1. **Generate** a random test via your `generator`.
 2. **Run** both solutions (`naive` and `smart`) on that test.
@@ -108,7 +108,7 @@ Loop until a discrepancy is found or a user‑defined iteration limit is reached
 
 ---
 
-### 🛠️ Writing Your Generator
+### Writing Your Generator
 
 Your generator should read nothing from **stdin** and output **one** random test case per invocation, for example:
 
@@ -127,6 +127,5 @@ int main() {
     return 0;
 }
 ```
-
 
 Happy stress‑testing! 🚀
