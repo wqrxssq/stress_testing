@@ -119,20 +119,20 @@ public:
             if (checker_code != 0) {
                 cerr << "WA on test #" << t << "!\n";
 
-                ifstream input("tests/in.txt");
-                ifstream stupid("tests/naiveOut.txt");
-                ifstream smart("tests/smartOut.txt");
+                // ifstream input("tests/in.txt");
+                // ifstream stupid("tests/naiveOut.txt");
+                // ifstream smart("tests/smartOut.txt");
 
-                cerr << "====Input====";
-                printFile(input);
-                cerr << '\n';
+                // cerr << "====Input====\n";
+                // printFile(input);
+                // cerr << '\n';
 
-                cerr << "====Your answer====";
-                printFile(smart);
-                cerr << '\n';
+                // cerr << "====Your answer====\n";
+                // printFile(smart);
+                // cerr << '\n';
 
-                cerr << "====Expected answer====";
-                printFile(stupid);
+                // cerr << "====Expected answer====\n";
+                // printFile(stupid);
                 cerr << '\n';
 
                 exit(1);
