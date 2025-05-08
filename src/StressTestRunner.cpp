@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdlib>
+#include <sys/wait.h>
 
 using namespace std;
 
-static const double EPS = 1e6;
 static const int PIECES = 10;
 
 // execute cmd and return exit code
@@ -13,9 +14,8 @@ int execute(const string& cmd) {
     return WEXITSTATUS(status);
 }
 
-void put_format_error() {
-    cerr << R"(
-    Fromat Error!
+void throwFormatError() {
+    cerr << R"(Format Error!
 
     Input commands:
 
@@ -37,9 +37,10 @@ void put_format_error() {
       argv[3] - generator 
       argv[4] - path to the checker
     )";
+    exit(1);
 }
 
-void print_progress(int test, int every_piece) {
+void printProgress(int test, int every_piece) {
     cerr << '[';
     int done_pieces = (test - 1) / every_piece;
     for (int i = 0; i < done_pieces; i++) {
@@ -48,40 +49,37 @@ void print_progress(int test, int every_piece) {
     for (int i = done_pieces; i < PIECES; i++) {
         cerr << ".....";
     }
-    cerr << 10 * done_pieces << "%";
-    cerr << "]\n";
+    cerr << 10 * done_pieces << "% ]\n";
+}
+
+void printFile(ifstream& file) {
+    string line;
+    while (getline(file, line)) {
+        cerr << line << '\n';
+    }
 }
 
 class StressTesting {
 public:
-    StressTesting(bool is_advanced) {
-        _correct_sol_name = "src/NaiveSolution.cpp";
-        _incorrect_sol_name = "src/SmartSolution.cpp";
-        _generator_name = "src/Generator.cpp";
+    StressTesting(bool is_advanced) :
+        _correct_sol_name("src/NaiveSolution.cpp"),
+        _incorrect_sol_name("src/SmartSolution.cpp"),
+        _generator_name("src/Generator.cpp"),
+        _checker_name(is_advanced ? "src/AdvancedChecker.cpp" : "src/StandartChecker.cpp")
+    {}
 
-        if (is_advanced) {
-            _checker_name = "src/AdvancedChecker.cpp";
-        } else {
-            _checker_name = "src/StandartChecker.cpp";
-        }
-    }
-
-    StressTesting(bool is_advanced, const string& correct_sol_name, const string& incorrect_sol_name,
-                  const string& generator_name, const string& checker_name = "src/StandartChecker.cpp") {
-        _correct_sol_name = correct_sol_name;
-        _incorrect_sol_name = incorrect_sol_name;
-        _generator_name = generator_name;
-
-        if (is_advanced) {
-            _checker_name = checker_name;
-        } else {
-            _checker_name = "src/StandartChecker.cpp";
-        }
-    }
+    StressTesting(bool is_advanced,
+        const string& correct_sol_name,
+        const string& incorrect_sol_name,
+        const string& generator_name,
+        const string& checker_name = "src/StandartChecker.cpp") : 
+        _correct_sol_name(correct_sol_name),
+        _incorrect_sol_name(incorrect_sol_name),
+        _generator_name(generator_name),
+        _checker_name(is_advanced ? checker_name : "src/StandartChecker.cpp")
+    {}
 
     void startStress() const {
-        // TODO: each file should exist
-
         // compile
         execute("clang++ -std=c++2a " + _correct_sol_name + " -o build/stupid");
         cerr << "Compilation of correct solution completed!\n";
@@ -92,32 +90,51 @@ public:
         execute("clang++ -std=c++2a " + _checker_name + " -o build/checker");
         cerr << "Compilation of checker completed!\n";
 
+        // read test count
         int cnt_tests;
-        cerr << "Print cnt_tests: ";
-        cin >> cnt_tests;
-
-        // TODO: cnt_tests should be >= 10
+        cerr << "Enter number of tests (>= " << PIECES << "): ";
+        if (!(cin >> cnt_tests) || cnt_tests < PIECES) {
+            cerr << "Error: invalid test count; must be integer >= " << PIECES << "\n";
+            exit(3);
+        }
         int every_piece = cnt_tests / PIECES;
 
-        cerr << "Start of testing\n";
-        // searching for WA
-        for (size_t t = 1; t <= cnt_tests; t++) {
+        cerr << "\nStarting stress testing (" << cnt_tests << " runs)...\n";
+        for (int t = 1; t <= cnt_tests; t++) {
             if ((t - 1) % every_piece == 0) {
-                print_progress(t, every_piece);
+                printProgress(t, every_piece);
             }
 
             // gen test
             execute("build/generator >tests/in.txt");
 
             // run solutions
-            execute("build/stupid <tests/in.txt >tests/out_stupid.txt");
-            execute("build/smart <tests/in.txt >tests/out_smart.txt");
+            execute("build/stupid <tests/in.txt >tests/naiveOut.txt");
+            execute("build/smart <tests/in.txt >tests/smartOut.txt");
 
             // run checker and get exit code
             int checker_code = execute("build/checker");
 
+            // found WA
             if (checker_code != 0) {
                 cerr << "WA on test #" << t << "!\n";
+
+                ifstream input("tests/in.txt");
+                ifstream stupid("tests/naiveOut.txt");
+                ifstream smart("tests/smartOut.txt");
+
+                cerr << "====Input====";
+                printFile(input);
+                cerr << '\n';
+
+                cerr << "====Your answer====";
+                printFile(smart);
+                cerr << '\n';
+
+                cerr << "====Expected answer====";
+                printFile(stupid);
+                cerr << '\n';
+
                 exit(1);
             }
         }
@@ -147,7 +164,7 @@ int main(int argc, char ** argv) {
             StressTesting Stress{true};
             Stress.startStress();
         } else {
-            put_format_error();
+            throwFormatError();
         }
         break;
     }
@@ -165,7 +182,7 @@ int main(int argc, char ** argv) {
     // Advanced mode with own files
     case 6: {
         if (argv[1] != "-a") {
-            put_format_error();
+            throwFormatError();
         } else {
             string correct_sol_name = argv[2];
             string incorrect_sol_name = argv[3];
@@ -177,8 +194,7 @@ int main(int argc, char ** argv) {
         break;
     }
     default:
-        put_format_error();
-        break;
+        throwFormatError();
     }
 
     return 0;
