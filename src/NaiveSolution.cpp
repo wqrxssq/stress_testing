@@ -1,97 +1,50 @@
-#pragma GCC optimize("O3,unroll-loops")
+/*
 
-#include <math.h>
+For example, this task is:
 
-#include <algorithm>
-#include <bitset>
-#include <cassert>
-#include <chrono>
-#include <cstring>
-#include <deque>
-#include <iomanip>
+Given an integer n, and an array of numbers size n. You need to return sum of array.
+
+The naive solution is correct. 
+And smart solution can overflow(because I use "int" instead of "long long"), so it is sometimes inccorect.
+This error is very difficult to detect manually (unless you are a professional), so stress testing is very usefull for it.
+
+This is naive solution.
+
+*/
+
+/*
+
+For users: 
+
+You need to write naive solution, which is always correct, but maybe it is not very fast working.
+
+You should write code as usual(cin, cout),
+no need to work with any threads,
+all the hard work is done for you
+
+*/
+
 #include <iostream>
-#include <map>
-#include <queue>
-#include <random>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-#include <climits>
 using namespace std;
 
 using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using vvi = vector<vi>;
-using vll = vector<ll>;
-using pii = pair<int, int>;
-using pll = pair<ll, ll>;
-using vpii = vector<pii>;
-const double PI = acos(-1);
-const double EPS = 1e-6;
-const int INF = 1e9;
-const ll INFLL = 1e18;
-const int MOD = 1e9 + 7;
-
-mt19937 rnd(static_cast<unsigned int>(chrono::steady_clock().now().time_since_epoch().count()));
-
-#define all(_x) _x.begin(), _x.end()
-#define rall(_x) _x.rbegin(), _x.rend()
-#define pb push_back
-#define ff first
-#define ss second
-#define sz(_x) (int)_x.size()
-#define display(_x)        \
-    for (auto el : _x)     \
-        cout << el << ' '; \
-    cout << '\n'
-#define cin_arr(_x)     \
-    for (auto& el : _x) \
-        cin >> el;
-#define fast_input ios_base::sync_with_stdio(0); cin.tie(0)
-#define setpr(_x) cout << setprecision(_x) << fixed
-#define debug(x) cout << __FUNCTION__ << ": " << #x " = " << (x) << endl
 
 const int MAXN = 1e5;
 int n;
-
-long double p[MAXN];
-long double ans[MAXN];
+int a[MAXN];
 
 void solve() {
+    ll sum = 0;
     cin >> n;
-
-    fill(p, p + n, 1);
-
-    int unlocked = 0;
-    int balance = 0;
-    for (int i = 0; i < 2 * n; i++) {
-        char c;
-        int t;
-        cin >> c >> t;
-        if (c == '+') {
-            ans[unlocked++] -= t;
-            ++balance;
-        } else {
-            for (int j = 0; j < unlocked; j++) {
-                long double temp_prob = p[j] / balance;
-                ans[j] += (long double)t * temp_prob;
-                p[j] -= temp_prob;
-            }
-            --balance;
-        }
-    }
-
     for (int i = 0; i < n; i++) {
-        cout << ans[i] << '\n';
+        cin >> a[i];
+        sum += a[i];
     }
+
+    cout << sum << '\n';
 }
 
 int main() {
-    fast_input;
-    setpr(9);
+    ios_base::sync_with_stdio(0); cin.tie(0);
     solve();
 }
