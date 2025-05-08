@@ -39,7 +39,7 @@ Run without a custom checker. Each test’s output is compared for **exact match
 2) Run the following command in terminal:
 
 ```bash
-/build/main
+/build/stress
 ```
 
 **Warning**: Don't edit 'StressTestRunner.cpp', you don't need it.
