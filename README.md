@@ -79,11 +79,11 @@ build/stress <path/to/naive> <path/to/smart> <path/to/generator>
 And for advanced mode:
 
 ```bash
-/build/stress <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker> -a
+/build/stress -a <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker>
 ```
 
-- `argv[4]` — path to the **checker** executable
 - `-a` flag enables checker‑based verdicts
+- `argv[4]` — path to the **checker** executable
 
 #### Logs
 
