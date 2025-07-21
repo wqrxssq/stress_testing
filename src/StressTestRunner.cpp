@@ -15,28 +15,21 @@ int execute(const string& cmd) {
 }
 
 void throwFormatError() {
-    cerr << R"(Format Error!
-
-    Input commands:
-
-    1) Standard mode - No argv
-
-    2) Advanced mode - argv[1] == "-a" or argv[1] == "-advanced"
-
-    3) Working with files:
-
-    - <path/to/naive> <path/to/smart> <path/to/generator>
-      argv[1] - correct solution (stupid)
-      argv[2] - incorrect solution
-      argv[3] - generator 
-
-    - -a <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker>
-      "-a" flag enables checker‑based verdicts
-      argv[1] - correct solution (stupid)
-      argv[2] - incorrect solution
-      argv[3] - generator 
-      argv[4] - path to the checker
-    )";
+    cerr << "Format Error!\n"
+    "Input commands:\n"
+    "1) Standard mode - No argv\n"
+    "2) Advanced mode - argv[1] == '-a' or argv[1] == '-advanced'\n"
+    "3) Working with files:\n"
+    "- <path/to/naive> <path/to/smart> <path/to/generator>\n"
+    "  argv[1] - correct solution (stupid)\n"
+    "  argv[2] - incorrect solution\n"
+    "  argv[3] - generator\n"
+    "- -a <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker>\n"
+    "  '-a' flag enables checker‑based verdicts\n"
+    "  argv[1] - correct solution (stupid)\n"
+    "  argv[2] - incorrect solution\n"
+    "  argv[3] - generator\n"
+    "  argv[4] - path to the checker\n";
     exit(1);
 }
 
@@ -153,7 +146,7 @@ int main(int argc, char ** argv) {
 
     // Basic mode
     case 1: {
-        StressTesting Stress{false};
+        StressTesting Stress(false);
         Stress.startStress();
         break;
     }
@@ -162,7 +155,7 @@ int main(int argc, char ** argv) {
     case 2: {
         string flag = argv[1];
         if (flag == "-a" || flag == "-advanced") {
-            StressTesting Stress{true};
+            StressTesting Stress(true);
             Stress.startStress();
         } else {
             throwFormatError();
@@ -175,7 +168,7 @@ int main(int argc, char ** argv) {
         string correct_sol_name = argv[1];
         string incorrect_sol_name = argv[2];
         string generator_name = argv[3];
-        StressTesting Stress{false, correct_sol_name, incorrect_sol_name, generator_name};
+        StressTesting Stress(false, correct_sol_name, incorrect_sol_name, generator_name);
         Stress.startStress();
         break;
     }
@@ -190,7 +183,7 @@ int main(int argc, char ** argv) {
             string incorrect_sol_name = argv[3];
             string generator_name = argv[4];
             string checker_name = argv[5];
-            StressTesting Stress{true, correct_sol_name, incorrect_sol_name, generator_name, checker_name};
+            StressTesting Stress(true, correct_sol_name, incorrect_sol_name, generator_name, checker_name);
             Stress.startStress();
         }
         break;
