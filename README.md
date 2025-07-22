@@ -1,6 +1,6 @@
 ## Stress Testing
 
-A lightweight shell for **automated stress testing** of two competing solutions:
+A lightweight shell for **automated stress testing** of two competing solutions on `C++`:
 
 - `NaiveSolution.cpp` (slow but guaranteed correct)  
 - `SmartSolution.cpp` (fast, but may contain bugs)
@@ -18,7 +18,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 ├── SmartSolution.cpp         # High‑performance solution under test
 ├── Generator.cpp             # User‑provided test‑case generator
 ├── StandartChecker.cpp       # Standart checker for problems (One answer for each test)
-├── AdvancedCheker.cpp        # (Optional) Custom checker for advanced problems (Multiple answers for each test)
+├── AdvancedCheker.cpp        # (Optional) Custom checker for advanced problems
 └── StressTestRunner.cpp      # Main shell
 
 ````
@@ -26,6 +26,20 @@ By generating random test cases and comparing outputs, this tool helps you find 
 ---
 
 ### Usage
+
+#### Dependencies
+
+- **CMake** ≥ 3.15  
+- **make**  
+- **clang++** (with C++20)
+
+#### Build
+
+To build project use in terminal:
+
+```bash
+make build
+```
 
 #### Basic Mode
 
@@ -39,10 +53,10 @@ Run without a custom checker. Each test’s output is compared for **exact match
 2) Run the following command in terminal:
 
 ```bash
-/build/stress
+make start-stress
 ```
 
-**Warning**: Don't edit 'StressTestRunner.cpp', you don't need it.
+If the stress test detects a wrong answer (WA), you can inspect the failing test case in the `tests` directory—there you’ll find the input file (`in.txt`) and the corresponding outputs (`naiveOut.txt` and `smartOut.txt`) to help you diagnose the issue.
 
 #### Advanced Mode
 
@@ -55,42 +69,16 @@ Use a custom checker (for problems with multiple valid outputs):
 3) Run the following command in terminal:
 
 ```bash
-/build/stress -advanced
-```
-
-or just:
-
-```bash
-/build/stress -a
+make start-adv-stress
 ```
 
 #### Other features
 
-Also you can use this command for basic mode:
+Also you can use basic or advanced mode with our files by providing path to them (or only some of them!):
 
 ```bash
-build/stress <path/to/naive> <path/to/smart> <path/to/generator>
-```
-
-- `argv[1]` — path to the **correct** (naive) solution
-- `argv[2]` — path to the **tested** (smart) solution
-- `argv[3]` — path to the **test generator**
-
-And for advanced mode:
-
-```bash
-/build/stress -a <path/to/naive> <path/to/smart> <path/to/generator> <path/to/checker>
-```
-
-- `-a` flag enables checker‑based verdicts
-- `argv[4]` — path to the **checker** executable
-
-#### Logs
-
-If you want to get statistics of usage, run the command:
-
-```bash
-/build/stress -logs
+make start-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<path/to/generator>
+make start-adv-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<path/to/generator> CHECKER=<path/to/checker>
 ```
 
 ---
