@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang
+
+      - name: Build
+        run: make build
+
+      - name: run basic stress test
+        run: echo "100" | make start-stress
+
+      - name: run adv stress test
+        run: echo "100" | make start-adv-stress
+
+      - name: Upload compile_commands.json
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-commands
+          path: build/compile_commands.json
