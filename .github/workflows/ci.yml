@@ -23,10 +23,10 @@ jobs:
         run: make build
 
       - name: run basic stress test
-        run: make start-stress
+        run: echo "100" | make start-stress
 
       - name: run adv stress test
-        run: make start-adv-stress
+        run: echo "100" | make start-adv-stress
 
       - name: Upload compile_commands.json
         if: always()
