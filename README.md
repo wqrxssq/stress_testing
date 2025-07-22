@@ -13,7 +13,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 
 ```markdown
 
-.
+src/
 ├── NaiveSolution.cpp         # Correct (but slow) reference solution
 ├── SmartSolution.cpp         # High‑performance solution under test
 ├── Generator.cpp             # User‑provided test‑case generator
@@ -45,7 +45,7 @@ make build
 
 Run without a custom checker. Each test’s output is compared for **exact match**:
 
-1) Edit the following files (In each file you have a small instuction how to do it):
+1) Edit the following files in `src` directory(In each file you have a small instuction how to do it):
     - `NaiveSolution.cpp` - A correct solution that works for any time(even exponent or factorial)
     - `SmartSolution.cpp` - A solution that works efficiently, the correctness of which the user is not sure of
     - `Generator.cpp` - A generator that generates random short(or not so short, but a naive solution should process it in a reasonable amount of time) tests
@@ -56,7 +56,7 @@ Run without a custom checker. Each test’s output is compared for **exact match
 make start-stress
 ```
 
-If the stress test detects a wrong answer (WA), you can inspect the failing test case in the `tests` directory—there you’ll find the input file (`in.txt`) and the corresponding outputs (`naiveOut.txt` and `smartOut.txt`) to help you diagnose the issue.
+If the stress test detects a wrong answer (**WA**), you can inspect the failing test case in the `tests` directory—there you’ll find the input file (`in.txt`) and the corresponding outputs (`naiveOut.txt` and `smartOut.txt`) to help you diagnose the issue.
 
 #### Advanced Mode
 
@@ -64,7 +64,7 @@ Use a custom checker (for problems with multiple valid outputs):
 
 1) Exactly the same as in the basic mode
 
-2) Edit `AdvancedChecker.cpp` - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in AdvancedChecker.cpp.
+2) Edit `AdvancedChecker.cpp` in `src` directory - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in AdvancedChecker.cpp.
 
 3) Run the following command in terminal:
 
