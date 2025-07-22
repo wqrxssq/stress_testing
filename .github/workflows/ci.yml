@@ -30,7 +30,7 @@ jobs:
 
       - name: Upload compile_commands.json
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: compile-commands
           path: build/compile_commands.json
