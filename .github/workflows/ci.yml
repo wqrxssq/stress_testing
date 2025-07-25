@@ -4,22 +4,42 @@ on:
   push:
     branches: [ main, dev ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main ]
 
 jobs:
-  build-and-run:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake clang
 
-      - name: Build
+      - name: build
+        run: make build
+
+      - name: upload compile_commands.json
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-commands
+          path: build/compile_commands.json
+
+
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang
+      
+      - name: build
         run: make build
 
       - name: run basic stress test
@@ -27,10 +47,3 @@ jobs:
 
       - name: run adv stress test
         run: echo "100" | make start-adv-stress
-
-      - name: Upload compile_commands.json
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: compile-commands
-          path: build/compile_commands.json
