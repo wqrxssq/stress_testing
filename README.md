@@ -81,6 +81,10 @@ make start-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<path/to
 make start-adv-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<path/to/generator> CHECKER=<path/to/checker>
 ```
 
+### Example
+
+There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check in `src/cxx-builder/`.
+
 ---
 
 ### How It Works
