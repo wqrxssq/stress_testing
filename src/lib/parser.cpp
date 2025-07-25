@@ -1,4 +1,5 @@
 #include "parser.hpp"
+#include <stdexcept>
 
 Lang LangDetector::DetectLang(const std::string &file_path) {
     auto pos = file_path.find_last_of('.');

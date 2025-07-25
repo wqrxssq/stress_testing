@@ -1,6 +1,8 @@
 #include "cmd-builder.hpp"
 #include "parser.hpp"
 
+#include <stdexcept>
+
 std::string CommandBuilder::BuildCommand(
     const std::string& path_to_file,
     const std::string& path_to_bin
