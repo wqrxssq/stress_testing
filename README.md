@@ -83,7 +83,7 @@ make start-adv-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<pat
 
 ### Example
 
-There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check in `src/cxx-builder/`.
+There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/cxx-builder/` and given example problem [here](example_task.md)
 
 ---
 
