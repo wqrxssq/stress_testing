@@ -7,11 +7,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(${PROJECT_NAME}_objs OBJECT
+    src/utils/parser.hpp
+    src/utils/parser.cpp
+    src/compiler.hpp
+    src/utils/compiler-factory.hpp
+    src/utils/compiler-factory.cpp
     src/langs.hpp
-	src/lib/parser.hpp
-    src/lib/parser.cpp
-    src/lib/cmd-builder.hpp
-    src/lib/cmd-builder.cpp
 )
 
 # Цель для сборки
