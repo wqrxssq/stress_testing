@@ -1,0 +1,22 @@
+#include <gtest/gtest.h>
+#include "../src/langs.hpp"
+
+TEST(TestCompilerFactory, TestCppPath) {
+    std::string path_to_file = "src/cpp-runner/generator.cpp";
+    auto compiler_ptr = CompilerFactory::FromPath(path_to_file);
+    auto& compiler = *compiler_ptr;
+    EXPECT_EQ(typeid(compiler), typeid(CppCompiler));
+}
+
+TEST(TestCompilerFactory, TestPyPath) {
+    std::string path_to_file = "src/py-runner/generator.py";
+    auto compiler_ptr = CompilerFactory::FromPath(path_to_file);
+    auto& compiler = *compiler_ptr;
+    EXPECT_EQ(typeid(compiler), typeid(PyCompiler));
+}
+
+TEST(TestCompilerFactory, TestBadPath) {
+    std::string path_to_file = "dummy.c";
+    EXPECT_ANY_THROW(CompilerFactory::FromPath(path_to_file));
+}
+
