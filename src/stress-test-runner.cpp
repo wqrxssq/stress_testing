@@ -1,13 +1,14 @@
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <cstdlib>
 #include <sys/wait.h>
 
-#include "lib/cmd-builder.hpp"
+#include "langs.hpp"
 
 static const int kPARTS = 10;
-static const std::string kPATH_TO_BASIC_CHECKER = "src/cxx-builder/standart-checker.cpp";
+static const std::string kPATH_TO_BASIC_CHECKER = "src/utils/standart-checker.cpp";
 
 // execute cmd and return exit code
 int Execute(const std::string& cmd) {
@@ -32,9 +33,9 @@ void PrintProgress(int test, int every_piece) {
 }
 
 void Compile(std::string path_to_file, std::string name, std::string path_to_bin) {
-    auto cmd = CommandBuilder::BuildCommand(path_to_file, path_to_bin);
-    int status_code = Execute(cmd);
-    if (status_code != 0) {
+    auto compiler = CompilerFactory::FromPath(path_to_file);
+    bool is_compiled = compiler->Compile(path_to_file, path_to_bin);
+    if (!is_compiled) {
         throw std::logic_error("Problems with compilation\n");
     }
     std::cout << "Compilation of " << name << " completed!\n";

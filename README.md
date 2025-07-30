@@ -15,7 +15,7 @@ You will need to work with these files to run stress-testing.
 
 ```markdown
 
-src/*_builder
+src/*-runner
 ├── naive-solution.*         # Correct (but slow) reference solution
 ├── smart-solution.*         # High‑performance solution under test
 ├── generator.*              # User‑provided test‑case generator
@@ -46,7 +46,7 @@ make build
 
 Run without a custom checker. Each test’s output is compared for **exact match**:
 
-1) Edit the following files in `src/*-builder` (in each file you have a small instuction how to do it):
+1) Edit the following files in `src/*-runner` (in each file you have a small instuction how to do it):
     - `naive-solution.*` - A correct solution that works for any time(even exponent or factorial)
     - `smart-solution.*` - A solution that works efficiently, the correctness of which the user is not sure of
     - `generator.*` - A generator that generates random short (or not so short, but a naive solution should process it in a reasonable amount of time) tests
@@ -59,10 +59,10 @@ make start-stress
 
 If the stress test detects a wrong answer (WA), you can inspect the failing test case in the `tests` directory—there you’ll find the input file (`in.txt`) and the corresponding outputs (`naiveOut.txt` and `smartOut.txt`) to help you diagnose the issue.
 
-**WARNING**: by default it uses cpp files, so if you want to use another lang use `BUILD_LANG`:
+**WARNING**: by default it uses cpp files, so if you want to use another lang use `RUN_LANG`:
 
 ```bash
-make start-stress BUILD_LANG=py
+make start-stress RUN_LANG=py
 ```
 
 #### Advanced Mode
@@ -71,7 +71,7 @@ Use a custom checker (for problems with multiple valid outputs):
 
 1) Exactly the same as in the basic mode
 
-2) Edit `src/*-builder/advanced-checker.*` - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in `advanced-checker.*`.
+2) Edit `src/*-runner/advanced-checker.*` - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in `advanced-checker.*`.
 
 3) Run the following command in terminal:
 
@@ -79,10 +79,10 @@ Use a custom checker (for problems with multiple valid outputs):
 make start-adv-stress
 ```
 
-**WARNING**: by default it uses cpp files, so if you want to use another lang use `BUILD_LANG`:
+**WARNING**: by default it uses cpp files, so if you want to use another lang use `RUN_LANG`:
 
 ```bash
-make start-adv-stress BUILD_LANG=py
+make start-adv-stress RUN_LANG=py
 ```
 
 #### Other features
@@ -97,12 +97,12 @@ make start-adv-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<pat
 For example(use python and c++ files both!):
 
 ```bash
-make start-adv-stress NAIVE=src/cxx-builder/naive-solution.cpp SMART=src/py-builder/smart-solution.py CHECKER=src/py-builder/advanced-checker.py
+make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py CHECKER=src/py-runner/advanced-checker.py
 ```
 
 ### Example
 
-There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-builder/` and given example problem [here](example_task.md)
+There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-runner/` and given example problem [here](example_task.md)
 
 ---
 

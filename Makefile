@@ -2,20 +2,20 @@ CXX_COMPILER := clang++
 BUILD_DIR    := build
 BIN          := $(BUILD_DIR)/stress_testing
 
-BUILD_LANG ?= cpp
+RUN_LANG ?= cpp
 
-ifeq ($(BUILD_LANG),cpp)
-	NAIVE     ?= src/cxx-builder/naive-solution.cpp
-	SMART     ?= src/cxx-builder/smart-solution.cpp
-	GENERATOR ?= src/cxx-builder/generator.cpp
-	CHECKER   ?= src/cxx-builder/advanced-checker.cpp
-else ifeq ($(BUILD_LANG),py)
-	NAIVE     ?= src/py-builder/naive-solution.py
-	SMART     ?= src/py-builder/smart-solution.py
-	GENERATOR ?= src/py-builder/generator.py
-	CHECKER   ?= src/py-builder/advanced-checker.py
+ifeq ($(RUN_LANG),cpp)
+	NAIVE     ?= src/cpp-runner/naive-solution.cpp
+	SMART     ?= src/cpp-runner/smart-solution.cpp
+	GENERATOR ?= src/cpp-runner/generator.cpp
+	CHECKER   ?= src/cpp-runner/advanced-checker.cpp
+else ifeq ($(RUN_LANG),py)
+	NAIVE     ?= src/py-runner/naive-solution.py
+	SMART     ?= src/py-runner/smart-solution.py
+	GENERATOR ?= src/py-runner/generator.py
+	CHECKER   ?= src/py-runner/advanced-checker.py
 else
-$(error Unsupported value for BUILD_LANG: '$(BUILD_LANG)'. Supported: cpp, py)
+$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py)
 endif
 
 .PHONY: all

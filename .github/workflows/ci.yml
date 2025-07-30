@@ -30,7 +30,7 @@ jobs:
           path: build/compile_commands.json
 
 
-  test-on-cxx:
+  test-on-cpp:
     runs-on: ubuntu-latest
 
     steps:
@@ -45,10 +45,10 @@ jobs:
       - name: build
         run: make build
 
-      - name: run basic stress test on cxx
+      - name: run basic stress test on cpp
         run: echo "100" | make start-stress
 
-      - name: run adv stress test on cxx
+      - name: run adv stress test on cpp
         run: echo "100" | make start-adv-stress
 
   test-on-py:
@@ -67,10 +67,10 @@ jobs:
         run: make build
 
       - name: run basic stress test on py
-        run: echo "100" | make start-stress BUILD_LANG=py
+        run: echo "100" | make start-stress RUN_LANG=py
 
       - name: run adv stress test on py
-        run: echo "100" | make start-adv-stress BUILD_LANG=py
+        run: echo "100" | make start-adv-stress RUN_LANG=py
   
   test-custom-run:
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
         run: make build
 
       - name: run basic stress test
-        run: echo "100" | make start-stress NAIVE=src/cxx-builder/naive-solution.cpp SMART=src/py-builder/smart-solution.py
+        run: echo "100" | make start-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py
 
       - name: run adv stress test
-        run: echo "100" | make start-adv-stress NAIVE=src/cxx-builder/naive-solution.cpp SMART=src/py-builder/smart-solution.py CHECKER=src/py-builder/advanced-checker.py
+        run: echo "100" | make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py CHECKER=src/py-runner/advanced-checker.py
