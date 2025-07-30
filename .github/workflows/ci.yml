@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-run-unittests:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,9 @@ jobs:
 
       - name: build
         run: make build
+
+      - name: unittests
+        run: make test
 
       - name: upload compile_commands.json
         if: always()
