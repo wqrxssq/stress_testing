@@ -30,6 +30,11 @@ build:
 	cmake --build $(BUILD_DIR)
 	@mkdir -p tests
 
+# run unittests
+.PHONY: test
+test: build
+	$(BUILD_DIR)/stress_testing_unittest
+
 # basic run (with standard checker)
 .PHONY: start-stress
 start-stress: build

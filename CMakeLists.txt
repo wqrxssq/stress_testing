@@ -6,6 +6,17 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# install gtest
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        v1.17.0
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
 add_library(${PROJECT_NAME}_objs OBJECT
     src/utils/parser.hpp
     src/utils/parser.cpp
@@ -15,9 +26,19 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/langs.hpp
 )
 
-# Цель для сборки
+# main program
 add_executable(${PROJECT_NAME} src/stress-test-runner.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
+
+# unittests
+add_executable(${PROJECT_NAME}_unittest
+	unittests/test-compiler-factory.cpp
+  unittests/test-language-mapper.cpp
+  unittests/test-parser.cpp
+)
+target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs GTest::gtest_main)
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME}_unittest)
 
 # Прописать output в папку build/
 set_target_properties(${PROJECT_NAME} PROPERTIES

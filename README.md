@@ -31,7 +31,7 @@ src/*-runner
 
 - **CMake** ≥ 3.15  
 - **make**  
-- **clang++** (with C++20)
+- **clang** (with C++20)
 - **python3** (if you want to test **py** solutions)
 
 #### Build
