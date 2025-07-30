@@ -117,26 +117,4 @@ There is example for writing `generator`, `naive`, `smart`, `advanced-checker` a
 
 Loop until a discrepancy is found or a user‑defined iteration limit is reached.
 
----
-
-### Writing Your Generator
-
-Your generator should read nothing from **stdin** and output **one** random test case per invocation, for example:
-
-```cpp
-// generator.cpp (pseudocode)
-#include <iostream>
-#include <random>
-
-int main() {
-    std::mt19937_64 rng(42);
-    int n = rng() % 100 + 1;
-    std::cout << n << "\n";
-    for (size_t i = 0; i < n; ++i)
-        std::cout << (rng() % 1000) << ' ';
-    std::cout << '\n';
-    return 0;
-}
-```
-
 Happy stress‑testing! 🚀
