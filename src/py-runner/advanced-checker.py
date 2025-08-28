@@ -11,13 +11,13 @@
 import sys
 
 def solve(input_path, naive_path, smart_path):
-    with open(input_path, 'r') as f:
-        parts = f.read().split()
-        if not parts:
-            print("Checker error: input file is empty.", file=sys.stderr)
-            return 2
-        # original C++ read only `n`
-        n = int(parts[0])
+    # Your code is here
+
+    # with open(input_path, 'r') as f:
+    #     gen_input = f.read().split()
+    # if not gen_input:
+    #     print("Checker error: output file is empty.", file=sys.stderr)
+    #     return 2
 
     # read expected from naive, testing from smart
     with open(naive_path, 'r') as f:

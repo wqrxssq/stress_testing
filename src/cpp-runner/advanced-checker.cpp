@@ -18,10 +18,12 @@ Check example for more understanding.
 using namespace std;
 
 int solve(ifstream& input, ifstream& stupid, ifstream& smart) {
-    // Your code is here! 
+    // Your code is here!
 
+    /*
     int n;
     input >> n;
+    */
 
     int expected_ans, testing_ans;
     stupid >> expected_ans;
