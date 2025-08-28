@@ -4,22 +4,22 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include <fstream>
-using namespace std;
 
 int main() {
-    ifstream input("tests/in.txt");
-    ifstream stupid("tests/naiveOut.txt");
-    ifstream smart("tests/smartOut.txt");
+    // std::ifstream input("tests/in.txt");
+    std::ifstream stupid("tests/naiveOut.txt");
+    std::ifstream smart("tests/smartOut.txt");
 
-    if (!input.is_open() || !stupid.is_open() || !smart.is_open()) {
-        cerr << "Checker error: cannot open one of the files.\n";
+    if (!stupid.is_open() || !smart.is_open()) {
+        std::cerr << "Checker error: cannot open one of the files.\n";
         return 2;
     }
 
     // read all non-whitespace tokens from each output
-    vector<string> correctTokens, testTokens;
-    string token;
+    std::vector<std::string> correctTokens, testTokens;
+    std::string token;
 
     while (stupid >> token) {
         correctTokens.push_back(token);
