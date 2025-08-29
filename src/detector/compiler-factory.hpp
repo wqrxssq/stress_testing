@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 
 #include "../compiler-builder/language-compilers.hpp"
 #include "../langs.hpp"
