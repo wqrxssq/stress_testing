@@ -28,7 +28,8 @@ jobs:
         with:
           name: build-artifact
           path: |
-            build/
+            build/stress_testing
+            build/stress_testing_unittest
             build/compile_commands.json
 
   stress:
