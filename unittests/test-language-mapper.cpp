@@ -5,14 +5,31 @@
 TEST(TestLanguageMapper, TestCppExtension) {
     std::string ext = ".cpp";
     EXPECT_EQ(LanguageMapper::FromExtension(ext), Language::Cxx);
+
+    std::string path = "/bar/foo/checker.cpp";
+    EXPECT_EQ(LanguageMapper::FromPath(path), Language::Cxx);
 }
 
 TEST(TestLanguageMapper, TestPyExtension) {
     std::string ext = ".py";
     EXPECT_EQ(LanguageMapper::FromExtension(ext), Language::Python);
+
+    std::string path = "/bar/foo/generator.py";
+    EXPECT_EQ(LanguageMapper::FromPath(path), Language::Python);
 }
 
 TEST(TestLanguageMapper, TestWrongExtension) {
     std::string ext = ".js";
     EXPECT_THROW(LanguageMapper::FromExtension(ext), std::out_of_range);
+
+    std::string path = "/bar/foo/checker.js";
+    EXPECT_THROW(LanguageMapper::FromExtension(path), std::out_of_range);
+}
+
+TEST(TestLanguageMapper, TestEmptyExtension) {
+    std::string ext = "";
+    EXPECT_THROW(LanguageMapper::FromExtension(ext), std::out_of_range);
+
+    std::string path = "/bar/foo/checker";
+    EXPECT_THROW(LanguageMapper::FromExtension(path), std::out_of_range);
 }
