@@ -1,9 +1,10 @@
+#include <sys/wait.h>
+
+#include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
-#include <cstdlib>
-#include <sys/wait.h>
 
 #include "detector/compiler-factory.hpp"
 
@@ -25,7 +26,7 @@ void PrintProgress(int test, int every_piece) {
     int done_pieces = test / every_piece;
     for (int i = 0; i < done_pieces; i++) {
         std::cout << "#####";
-    } 
+    }
     for (int i = done_pieces; i < kPARTS; i++) {
         std::cout << "-----";
     }
@@ -42,17 +43,15 @@ void Compile(std::string path_to_file, std::string name, std::string path_to_bin
 }
 
 class StressTesting {
-public:
-    StressTesting(
-        const std::string& correct_sol_name,
-        const std::string& incorrect_sol_name,
-        const std::string& generator_name,
-        const std::string& checker_name = kPATH_TO_BASIC_CHECKER) : 
-        _path_to_correct_sol(correct_sol_name),
-        _path_to_testing_sol(incorrect_sol_name),
-        _path_to_generator(generator_name),
-        _path_to_checker(checker_name)
-    {}
+   public:
+    StressTesting(const std::string& correct_sol_name, const std::string& incorrect_sol_name,
+                  const std::string& generator_name,
+                  const std::string& checker_name = kPATH_TO_BASIC_CHECKER)
+        : _path_to_correct_sol(correct_sol_name),
+          _path_to_testing_sol(incorrect_sol_name),
+          _path_to_generator(generator_name),
+          _path_to_checker(checker_name) {
+    }
 
     void CompileFiles() const {
         Compile(_path_to_correct_sol, "correct solution", "build/stupid");
@@ -80,9 +79,8 @@ public:
         int cnt_tests;
         std::cout << "Enter number of tests (>= " << kPARTS << "): ";
         if (!(std::cin >> cnt_tests) || cnt_tests < kPARTS) {
-            throw std::invalid_argument(
-                "Error: invalid test count; must be integer >= " + std::to_string(kPARTS)
-            );
+            throw std::invalid_argument("Error: invalid test count; must be integer >= " +
+                                        std::to_string(kPARTS));
         }
         int every_piece = cnt_tests / kPARTS;
 
@@ -105,41 +103,41 @@ public:
         std::cout << "Your programm is correct:3\n";
     }
 
-private:
+   private:
     std::string _path_to_correct_sol;
     std::string _path_to_testing_sol;
     std::string _path_to_generator;
     std::string _path_to_checker;
 };
 
-int main(int argc, char ** argv) {
+int main(int argc, char** argv) {
     switch (argc) {
-
-    // Basic mode
-    case 4: {
-        std::string correct_sol_name = argv[1];
-        std::string incorrect_sol_name = argv[2];
-        std::string generator_name = argv[3];
-        StressTesting stress{correct_sol_name, incorrect_sol_name, generator_name};
-        stress.StartStress();
-        break;
-    }
-
-    // Advanced mode
-    case 6: {
-        std::string flag = argv[1];
-        if (flag != "-a") {
-            ThrowFormatError();
-        } else {
-            std::string correct_sol_name = argv[2];
-            std::string incorrect_sol_name = argv[3];
-            std::string generator_name = argv[4];
-            std::string checker_name = argv[5];
-            StressTesting stress{correct_sol_name, incorrect_sol_name, generator_name, checker_name};
+        // Basic mode
+        case 4: {
+            std::string correct_sol_name = argv[1];
+            std::string incorrect_sol_name = argv[2];
+            std::string generator_name = argv[3];
+            StressTesting stress{correct_sol_name, incorrect_sol_name, generator_name};
             stress.StartStress();
+            break;
         }
-        break;
-    }
+
+        // Advanced mode
+        case 6: {
+            std::string flag = argv[1];
+            if (flag != "-a") {
+                ThrowFormatError();
+            } else {
+                std::string correct_sol_name = argv[2];
+                std::string incorrect_sol_name = argv[3];
+                std::string generator_name = argv[4];
+                std::string checker_name = argv[5];
+                StressTesting stress{correct_sol_name, incorrect_sol_name, generator_name,
+                                     checker_name};
+                stress.StartStress();
+            }
+            break;
+        }
     }
     return 0;
 }

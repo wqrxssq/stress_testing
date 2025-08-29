@@ -1,5 +1,5 @@
-#include "compiler-factory.hpp"
 #include "../utils/parser.hpp"
+#include "compiler-factory.hpp"
 
 Language LanguageMapper::FromExtension(const std::string& extension) {
     const auto it = extension_map.find(extension);
