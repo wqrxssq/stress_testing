@@ -16,4 +16,3 @@ TEST(TestLanguageMapper, TestWrongExtension) {
     std::string ext = ".js";
     EXPECT_THROW(LanguageMapper::FromExtension(ext), std::out_of_range);
 }
-

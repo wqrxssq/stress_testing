@@ -19,4 +19,3 @@ TEST(TestCompilerFactory, TestBadPath) {
     std::string path_to_file = "dummy.c";
     EXPECT_ANY_THROW(CompilerFactory::FromPath(path_to_file));
 }
-
