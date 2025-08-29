@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <sys/wait.h>
 
-#include "langs.hpp"
+#include "detector/compiler-factory.hpp"
 
 static const int kPARTS = 10;
 static const std::string kPATH_TO_BASIC_CHECKER = "src/utils/standart-checker.cpp";

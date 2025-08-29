@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/langs.hpp"
+#include "../src/detector/compiler-factory.hpp"
 
 TEST(TestCompilerFactory, TestCppPath) {
     std::string path_to_file = "src/cpp-runner/generator.cpp";

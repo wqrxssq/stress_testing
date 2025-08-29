@@ -1,10 +1,7 @@
-#include "compiler-factory.hpp"
+#include "language-compilers.hpp"
 
-bool CppCompiler::Compile(const std::string& file_path,
-                const std::string& bin_path) const {
-    std::string cmd = "clang++ -std=c++20 " + file_path + " -o " + bin_path;
-    return system(cmd.c_str()) == 0;
-}
+#include <string>
+#include <cstdlib>
 
 bool PyCompiler::Compile(const std::string& file_path,
                 const std::string& bin_path) const {
