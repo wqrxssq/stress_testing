@@ -107,5 +107,12 @@ jobs:
           name: build-artifact
           path: .
 
+      - name: debug! list build dir
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Listing build/"
+          ls
+          ls build
+
       - name: run unit tests
         run: make test
