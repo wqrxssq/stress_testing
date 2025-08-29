@@ -49,6 +49,16 @@ jobs:
           name: build-artifact
           path: build
 
+      - name: ensure executables are executable
+        run: |
+          # выставляем права на бинарники, если они есть
+          if [ -f build/stress_testing_unittest ]; then
+            chmod +x build/stress_testing_unittest
+          fi
+          if [ -f build/stress_testing ]; then
+            chmod +x build/stress_testing
+          fi
+
       - name: install runtime deps (lighter)
         run: |
           sudo apt-get update
@@ -82,6 +92,15 @@ jobs:
           name: build-artifact
           path: build
 
+      - name: ensure executables are executable
+        run: |
+          if [ -f build/stress_testing_unittest ]; then
+            chmod +x build/stress_testing_unittest
+          fi
+          if [ -f build/stress_testing ]; then
+            chmod +x build/stress_testing
+          fi
+
       - name: install runtime deps (lighter)
         run: |
           sudo apt-get update
@@ -107,12 +126,14 @@ jobs:
           name: build-artifact
           path: build
 
-      - name: debug! list build dir
+      - name: ensure executables are executable
         run: |
-          echo "PWD: $(pwd)"
-          echo "Listing build/"
-          ls
-          ls build
+          if [ -f build/stress_testing_unittest ]; then
+            chmod +x build/stress_testing_unittest
+          fi
+          if [ -f build/stress_testing ]; then
+            chmod +x build/stress_testing
+          fi
 
       - name: run unit tests
         run: make test
