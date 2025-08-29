@@ -2,5 +2,6 @@
 
 enum class Language {
     Cxx,
-    Python
+    Python,
+    C
 };

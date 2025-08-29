@@ -14,8 +14,13 @@ else ifeq ($(RUN_LANG),py)
 	SMART     ?= src/py-runner/smart-solution.py
 	GENERATOR ?= src/py-runner/generator.py
 	CHECKER   ?= src/py-runner/advanced-checker.py
+else ifeq ($(RUN_LANG),c)
+	NAIVE     ?= src/c-runner/naive-solution.c
+	SMART     ?= src/c-runner/smart-solution.c
+	GENERATOR ?= src/c-runner/generator.c
+	CHECKER   ?= src/c-runner/advanced-checker.c
 else
-$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py)
+$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c)
 endif
 
 .PHONY: all

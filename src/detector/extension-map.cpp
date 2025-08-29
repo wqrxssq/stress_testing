@@ -3,7 +3,6 @@
 std::map<std::string, Language> LanguageMapper::extension_map = {
     {".cpp", Language::Cxx},
     {".cc",  Language::Cxx},
-    {".hpp", Language::Cxx},
-    {".h",   Language::Cxx},
-    {".py",  Language::Python}
+    {".py",  Language::Python},
+    {".c", Language::C}
 };

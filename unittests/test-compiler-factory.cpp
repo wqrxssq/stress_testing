@@ -15,7 +15,14 @@ TEST(TestCompilerFactory, TestPyPath) {
     EXPECT_EQ(typeid(compiler), typeid(PyCompiler));
 }
 
+TEST(TestCompilerFactory, TestCPath) {
+    std::string path_to_file = "src/cpp-runner/generator.c";
+    auto compiler_ptr = CompilerFactory::FromPath(path_to_file);
+    auto& compiler = *compiler_ptr;
+    EXPECT_EQ(typeid(compiler), typeid(CCompiler));
+}
+
 TEST(TestCompilerFactory, TestBadPath) {
-    std::string path_to_file = "dummy.c";
+    std::string path_to_file = "dummy.txt";
     EXPECT_ANY_THROW(CompilerFactory::FromPath(path_to_file));
 }

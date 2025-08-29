@@ -7,91 +7,104 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-run-unittests:
+  build:
     runs-on: ubuntu-latest
-
+    outputs:
+      build-artifact-name: build-artifact
     steps:
-      - name: checkout repository
+      - name: checkout
         uses: actions/checkout@v4
 
-      - name: install dependencies
+      - name: install deps (fast)
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake clang
+          sudo apt-get install -y cmake clang build-essential
 
       - name: build
         run: make build
 
-      - name: unittests
-        run: make test
-
-      - name: upload compile_commands.json
-        if: always()
+      - name: upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: compile-commands
-          path: build/compile_commands.json
+          name: build-artifact
+          path: |
+            build/
+            build/compile_commands.json
 
-
-  test-on-cpp:
+  stress:
+    needs: build
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        lang: [cpp, py, c]
+    timeout-minutes: 40
     steps:
-      - name: checkout repository
+      - name: checkout
         uses: actions/checkout@v4
 
-      - name: install dependencies
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./build_artifacts
+
+      - name: install runtime deps (lighter)
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake clang
-
-      - name: build
-        run: make build
-
-      - name: run basic stress test on cpp
-        run: echo "100" | make start-stress
-
-      - name: run adv stress test on cpp
-        run: echo "100" | make start-adv-stress
-
-  test-on-py:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-
-      - name: install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake clang
-
-      - name: build
-        run: make build
-
-      - name: run basic stress test on py
-        run: echo "100" | make start-stress RUN_LANG=py
-
-      - name: run adv stress test on py
-        run: echo "100" | make start-adv-stress RUN_LANG=py
-  
-  test-custom-run:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-
-      - name: install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake clang
-
-      - name: build
-        run: make build
+          sudo apt-get install -y cmake clang build-essential
 
       - name: run basic stress test
-        run: echo "100" | make start-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py
+        env:
+          RUN_LANG: ${{ matrix.lang }}
+        run: |
+          echo "100" | make start-stress RUN_LANG=${RUN_LANG}
 
-      - name: run adv stress test
-        run: echo "100" | make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py CHECKER=src/py-runner/advanced-checker.py
+      - name: run advanced stress test
+        if: always()
+        env:
+          RUN_LANG: ${{ matrix.lang }}
+        run: |
+          echo "100" | make start-adv-stress RUN_LANG=${RUN_LANG}
+        continue-on-error: false
+
+  custom-stress:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./build_artifacts
+
+      - name: install runtime deps (lighter)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang build-essential
+
+      - name: run basic stress test
+        run: |
+          echo "100" | make start-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py
+
+      - name: run advanced stress test
+        run: |
+          echo "100" | make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py CHECKER=src/c-runner/advanced-checker.c
+
+  unittests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./build_artifacts
+
+      - name: run unit tests
+        run: make test

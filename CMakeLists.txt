@@ -26,6 +26,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
   src/compiler-builder/language-compilers.hpp
   src/compiler-builder/py-compiler.cpp
   src/compiler-builder/cpp-compiler.cpp
+  src/compiler-builder/c-compiler.cpp
 
   src/detector/compiler-factory.hpp
   src/detector/extension-map.cpp
