@@ -32,18 +32,18 @@ build:
 
 # run unittests
 .PHONY: test
-test: build
+test:
 	$(BUILD_DIR)/stress_testing_unittest
 
 # basic run (with standard checker)
 .PHONY: start-stress
-start-stress: build
+start-stress:
 	@echo "=== Running stress_test_runner ==="
 	$(BIN) $(NAIVE) $(SMART) $(GENERATOR)
 
 # adv run (with custom checker)
 .PHONY: start-adv-stress
-start-adv-stress: build
+start-adv-stress:
 	@echo "=== Running advanced stress_test_runner ==="
 	$(BIN) -a $(NAIVE) $(SMART) $(GENERATOR) $(CHECKER)
 
