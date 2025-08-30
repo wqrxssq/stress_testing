@@ -111,7 +111,7 @@ make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runne
 
 #### Example
 
-There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-runner/` and given [example problem](EXAMPLE_TASK.md)
+There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-runner/` and given [example problem](example_task.md)
 
 ---
 
