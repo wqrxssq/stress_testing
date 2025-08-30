@@ -16,6 +16,7 @@ You may use any denomination any number of times (including zero) to form the su
 ---
 
 ### Output
+
 Print a single integer — the minimum number of banknotes needed to form the sum `m`.
 If it is impossible to form exactly `m`, print `-1`.
 
@@ -26,13 +27,15 @@ If it is impossible to form exactly `m`, print `-1`.
 - Test 1
 
     Input:
-    ```
+
+    ```md
     3 8
     1 2 5
     ```
 
     Output:
-    ```
+
+    ```md
     3
     ```
 
@@ -41,13 +44,15 @@ If it is impossible to form exactly `m`, print `-1`.
 - Test 2
 
     Input:
-    ```
+
+    ```md
     2 3
     2 4
     ```
 
     Output:
-    ```
+
+    ```md
     -1
     ```
 

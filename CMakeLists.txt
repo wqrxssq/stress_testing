@@ -18,12 +18,20 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_library(${PROJECT_NAME}_objs OBJECT
-    src/utils/parser.hpp
-    src/utils/parser.cpp
-    src/compiler.hpp
-    src/utils/compiler-factory.hpp
-    src/utils/compiler-factory.cpp
-    src/langs.hpp
+  src/langs.hpp
+
+  src/utils/parser.hpp
+  src/utils/parser.cpp
+
+  src/compiler-builder/language-compilers.hpp
+  src/compiler-builder/py-compiler.cpp
+  src/compiler-builder/cpp-compiler.cpp
+  src/compiler-builder/c-compiler.cpp
+
+  src/detector/compiler-factory.hpp
+  src/detector/extension-map.cpp
+  src/detector/language-detector.cpp
+  src/detector/compiler-factory.cpp
 )
 
 # main program
@@ -42,5 +50,5 @@ gtest_discover_tests(${PROJECT_NAME}_unittest)
 
 # Прописать output в папку build/
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )

@@ -1,11 +1,19 @@
 ## Stress Testing
 
-A lightweight shell for **automated stress testing** of two competing solutions on `C++` or `Python` (using * for cpp or py):
+A lightweight shell for **automated stress testing** of two competing solutions on different languages (using * for extension of your language):
 
 - `naive-solution.*` (slow but guaranteed correct)  
 - `smart-solution.*` (fast, but may contain bugs)
 
 By generating random test cases and comparing outputs, this tool helps you find edge‑case failures in your “smart” implementation, or just check correctness.
+
+---
+
+### Supported languages
+
+- `C++`
+- `Python`
+- `C`
 
 ---
 
@@ -32,7 +40,8 @@ src/*-runner
 - **CMake** ≥ 3.15  
 - **make**  
 - **clang** (with C++20)
-- **python3** (if you want to test **py** solutions)
+- **python3** (if you want to test **Py** solutions)
+- **gcc** (if you want to test **C** solutions)
 
 #### Build
 
@@ -100,9 +109,15 @@ For example(use python and c++ files both!):
 make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py CHECKER=src/py-runner/advanced-checker.py
 ```
 
-### Example
+#### Example
 
-There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-runner/` and given example problem [here](example_task.md)
+There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-runner/` and given [example problem](example_task.md)
+
+---
+
+### Contributing new languages
+
+We welcome the addition of new supported languages or new features! If you’d like to add support for a language (for example, Rust, Go, Java, etc.), check [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
@@ -116,27 +131,5 @@ There is example for writing `generator`, `naive`, `smart`, `advanced-checker` a
 4. **Report** the first failing test (input + both outputs) and halt.
 
 Loop until a discrepancy is found or a user‑defined iteration limit is reached.
-
----
-
-### Writing Your Generator
-
-Your generator should read nothing from **stdin** and output **one** random test case per invocation, for example:
-
-```cpp
-// generator.cpp (pseudocode)
-#include <iostream>
-#include <random>
-
-int main() {
-    std::mt19937_64 rng(42);
-    int n = rng() % 100 + 1;
-    std::cout << n << "\n";
-    for (size_t i = 0; i < n; ++i)
-        std::cout << (rng() % 1000) << ' ';
-    std::cout << '\n';
-    return 0;
-}
-```
 
 Happy stress‑testing! 🚀
