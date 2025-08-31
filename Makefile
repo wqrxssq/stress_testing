@@ -19,6 +19,11 @@ else ifeq ($(RUN_LANG),c)
 	SMART     ?= src/c-runner/smart-solution.c
 	GENERATOR ?= src/c-runner/generator.c
 	CHECKER   ?= src/c-runner/advanced-checker.c
+else ifeq ($(RUN_LANG),go)
+	NAIVE     ?= src/go-runner/naive-solution.go
+	SMART     ?= src/go-runner/smart-solution.go
+	GENERATOR ?= src/go-runner/generator.go
+	CHECKER   ?= src/go-runner/advanced-checker.go
 else
 $(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c)
 endif

@@ -18,7 +18,7 @@ jobs:
       - name: install deps (fast)
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake clang build-essential
+          sudo apt-get install -y cmake clang
 
       - name: build
         run: make build
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        lang: [cpp, py, c]
+        lang: [cpp, py, c, go]
     timeout-minutes: 40
     steps:
       - name: checkout
@@ -62,7 +62,7 @@ jobs:
       - name: install runtime deps (lighter)
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake clang build-essential
+          sudo apt-get install -y cmake clang build-essential golang-go
 
       - name: run basic stress test
         env:

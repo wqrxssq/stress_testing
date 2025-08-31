@@ -26,6 +26,14 @@ TEST(TestLanguageMapper, TestCExtension) {
     EXPECT_EQ(LanguageMapper::FromPath(path), Language::C);
 }
 
+TEST(TestLanguageMapper, TestGoExtension) {
+    std::string ext = ".go";
+    EXPECT_EQ(LanguageMapper::FromExtension(ext), Language::Go);
+
+    std::string path = "/bar/foo/generator.go";
+    EXPECT_EQ(LanguageMapper::FromPath(path), Language::Go);
+}
+
 TEST(TestLanguageMapper, TestWrongExtension) {
     std::string ext = ".md";
     EXPECT_THROW(LanguageMapper::FromExtension(ext), std::out_of_range);
