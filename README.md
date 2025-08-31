@@ -14,6 +14,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 - `C++`
 - `Python`
 - `C`
+- `Go`
 
 ---
 
@@ -23,7 +24,7 @@ You will need to work with these files to run stress-testing.
 
 ```markdown
 
-src/*-runner
+src/runners/*-runner
 ├── naive-solution.*         # Correct (but slow) reference solution
 ├── smart-solution.*         # High‑performance solution under test
 ├── generator.*              # User‑provided test‑case generator
@@ -42,6 +43,7 @@ src/*-runner
 - **clang** (with C++20)
 - **python3** (if you want to test **Py** solutions)
 - **gcc** (if you want to test **C** solutions)
+- **go** (if you want to test **GoLang** solutions)
 
 #### Build
 
@@ -55,7 +57,7 @@ make build
 
 Run without a custom checker. Each test’s output is compared for **exact match**:
 
-1) Edit the following files in `src/*-runner` (in each file you have a small instuction how to do it):
+1) Edit the following files in `src/runners/*-runner` (in each file you have a small instuction how to do it):
     - `naive-solution.*` - A correct solution that works for any time(even exponent or factorial)
     - `smart-solution.*` - A solution that works efficiently, the correctness of which the user is not sure of
     - `generator.*` - A generator that generates random short (or not so short, but a naive solution should process it in a reasonable amount of time) tests
@@ -80,7 +82,7 @@ Use a custom checker (for problems with multiple valid outputs):
 
 1) Exactly the same as in the basic mode
 
-2) Edit `src/*-runner/advanced-checker.*` - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in `advanced-checker.*`.
+2) Edit `src/runners/*-runner/advanced-checker.*` - In it you should have files `test.txt`, `smartOut.txt`, `naiveOut.txt` to check the correctness of each, and then compare their results, for more understanding see the original example in `advanced-checker.*`.
 
 3) Run the following command in terminal:
 
@@ -106,18 +108,18 @@ make start-adv-stress NAIVE=<path/to/naive> SMART=<path/to/smart> GENERATOR=<pat
 For example(use python and c++ files both!):
 
 ```bash
-make start-adv-stress NAIVE=src/cpp-runner/naive-solution.cpp SMART=src/py-runner/smart-solution.py CHECKER=src/py-runner/advanced-checker.py
+make start-adv-stress NAIVE=src/runners/cpp-runner/naive-solution.cpp SMART=src/runners/py-runner/smart-solution.py CHECKER=src/runners/c-runner/advanced-checker.c
 ```
 
 #### Example
 
-There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/*-runner/` and given [example problem](example_task.md)
+There is example for writing `generator`, `naive`, `smart`, `advanced-checker` and even example task. Check example codes in `src/runners/*-runner/` and given [example problem](example_task.md)
 
 ---
 
 ### Contributing new languages
 
-We welcome the addition of new supported languages or new features! If you’d like to add support for a language (for example, Rust, Go, Java, etc.), check [CONTRIBUTING.md](CONTRIBUTING.md)
+We welcome the addition of new supported languages or new features! If you’d like to add support for a language (for example, Rust, Swift, Java, etc.), check [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 

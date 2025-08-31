@@ -3,5 +3,6 @@
 enum class Language {
     Cxx,
     Python,
-    C
+    C,
+    Go
 };
