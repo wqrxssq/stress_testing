@@ -5,27 +5,27 @@ BIN          := $(BUILD_DIR)/stress_testing
 RUN_LANG ?= cpp
 
 ifeq ($(RUN_LANG),cpp)
-	NAIVE     ?= src/cpp-runner/naive-solution.cpp
-	SMART     ?= src/cpp-runner/smart-solution.cpp
-	GENERATOR ?= src/cpp-runner/generator.cpp
-	CHECKER   ?= src/cpp-runner/advanced-checker.cpp
+	NAIVE     ?= src/runners/cpp-runner/naive-solution.cpp
+	SMART     ?= src/runners/cpp-runner/smart-solution.cpp
+	GENERATOR ?= src/runners/cpp-runner/generator.cpp
+	CHECKER   ?= src/runners/cpp-runner/advanced-checker.cpp
 else ifeq ($(RUN_LANG),py)
-	NAIVE     ?= src/py-runner/naive-solution.py
-	SMART     ?= src/py-runner/smart-solution.py
-	GENERATOR ?= src/py-runner/generator.py
-	CHECKER   ?= src/py-runner/advanced-checker.py
+	NAIVE     ?= src/runners/py-runner/naive-solution.py
+	SMART     ?= src/runners/py-runner/smart-solution.py
+	GENERATOR ?= src/runners/py-runner/generator.py
+	CHECKER   ?= src/runners/py-runner/advanced-checker.py
 else ifeq ($(RUN_LANG),c)
-	NAIVE     ?= src/c-runner/naive-solution.c
-	SMART     ?= src/c-runner/smart-solution.c
-	GENERATOR ?= src/c-runner/generator.c
-	CHECKER   ?= src/c-runner/advanced-checker.c
+	NAIVE     ?= src/runners/c-runner/naive-solution.c
+	SMART     ?= src/runners/c-runner/smart-solution.c
+	GENERATOR ?= src/runners/c-runner/generator.c
+	CHECKER   ?= src/runners/c-runner/advanced-checker.c
 else ifeq ($(RUN_LANG),go)
-	NAIVE     ?= src/go-runner/naive-solution.go
-	SMART     ?= src/go-runner/smart-solution.go
-	GENERATOR ?= src/go-runner/generator.go
-	CHECKER   ?= src/go-runner/advanced-checker.go
+	NAIVE     ?= src/runners/go-runner/naive-solution.go
+	SMART     ?= src/runners/go-runner/smart-solution.go
+	GENERATOR ?= src/runners/go-runner/generator.go
+	CHECKER   ?= src/runners/go-runner/advanced-checker.go
 else
-$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c)
+$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c, go)
 endif
 
 .PHONY: all
