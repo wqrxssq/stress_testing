@@ -42,6 +42,14 @@ TEST(TestLanguageMapper, TestWrongExtension) {
     EXPECT_THROW(LanguageMapper::FromExtension(path), std::out_of_range);
 }
 
+TEST(TestLanguageMapper, TestJavaExtension) {
+    std::string ext = ".java";
+    EXPECT_EQ(LanguageMapper::FromExtension(ext), Language::Java);
+
+    std::string path = "/bar/foo/generator.java";
+    EXPECT_EQ(LanguageMapper::FromPath(path), Language::Java);
+}
+
 TEST(TestLanguageMapper, TestEmptyExtension) {
     std::string ext = "";
     EXPECT_THROW(LanguageMapper::FromExtension(ext), std::out_of_range);

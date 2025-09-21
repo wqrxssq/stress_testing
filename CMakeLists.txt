@@ -28,6 +28,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
   src/compiler-builder/cpp-compiler.cpp
   src/compiler-builder/c-compiler.cpp
   src/compiler-builder/go-compiler.cpp
+  src/compiler-builder/java-compiler.cpp
 
   src/detector/compiler-factory.hpp
   src/detector/extension-map.cpp
