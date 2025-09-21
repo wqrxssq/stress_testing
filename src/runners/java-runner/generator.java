@@ -14,7 +14,7 @@ all the hard work is done for you
 
 import java.util.*;
 
-public class Generator {
+class Generator {
     
     private static final int MAXN = 10;
     private static final int MAXM = 1000;

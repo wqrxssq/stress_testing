@@ -14,7 +14,7 @@ all the hard work is done for you
 
 import java.util.*;
 
-public class NaiveSolution {
+class NaiveSolution {
     
     private static final int INF = 1000000000;
     private static final int MAXN = 10;
