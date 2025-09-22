@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      build-artifact-name: build-artifact
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install deps (fast)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang
+
+      - name: build
+        run: make build
+
+      - name: upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: |
+            build/stress_testing
+            build/stress_testing_unittest
+            build/compile_commands.json
+
+  stress:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lang: [cpp, py, c, go]
+    timeout-minutes: 40
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: build
+
+      - name: ensure executables are executable
+        run: |
+          # выставляем права на бинарники, если они есть
+          if [ -f build/stress_testing_unittest ]; then
+            chmod +x build/stress_testing_unittest
+          fi
+          if [ -f build/stress_testing ]; then
+            chmod +x build/stress_testing
+          fi
+
+      - name: install runtime deps (lighter)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang build-essential golang-go
+
+      - name: run basic stress test
+        env:
+          RUN_LANG: ${{ matrix.lang }}
+        run: |
+          echo "100" | make start-stress RUN_LANG=${RUN_LANG}
+
+      - name: run advanced stress test
+        if: always()
+        env:
+          RUN_LANG: ${{ matrix.lang }}
+        run: |
+          echo "100" | make start-adv-stress RUN_LANG=${RUN_LANG}
+        continue-on-error: false
+
+  custom-stress:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: build
+
+      - name: ensure executables are executable
+        run: |
+          if [ -f build/stress_testing_unittest ]; then
+            chmod +x build/stress_testing_unittest
+          fi
+          if [ -f build/stress_testing ]; then
+            chmod +x build/stress_testing
+          fi
+
+      - name: install runtime deps (lighter)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake clang build-essential
+
+      - name: run basic stress test
+        run: |
+          echo "100" | make start-stress NAIVE=src/runners/cpp-runner/naive-solution.cpp SMART=src/runners/py-runner/smart-solution.py
+
+      - name: run advanced stress test
+        run: |
+          echo "100" | make start-adv-stress NAIVE=src/runners/cpp-runner/naive-solution.cpp SMART=src/runners/py-runner/smart-solution.py CHECKER=src/runners/c-runner/advanced-checker.c
+
+  unittests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: build
+
+      - name: ensure executables are executable
+        run: |
+          if [ -f build/stress_testing_unittest ]; then
+            chmod +x build/stress_testing_unittest
+          fi
+          if [ -f build/stress_testing ]; then
+            chmod +x build/stress_testing
+          fi
+
+      - name: run unit tests
+        run: make test
