@@ -15,6 +15,7 @@ By generating random test cases and comparing outputs, this tool helps you find 
 - `Python`
 - `C`
 - `Go`
+- `Java`
 
 ---
 
@@ -44,7 +45,7 @@ src/runners/*-runner
 - **python3** (if you want to test **Py** solutions)
 - **gcc** (if you want to test **C** solutions)
 - **go** (if you want to test **GoLang** solutions)
-
+- **JDK 8+** (if you want to test **Java** solutions)
 #### Build
 
 To build project use in terminal:
