@@ -30,7 +30,7 @@ else ifeq ($(RUN_LANG),java)
 	GENERATOR ?= src/runners/java-runner/generator.java
 	CHECKER   ?= src/runners/java-runner/advanced-checker.java
 else
-$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c, go)
+$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c, go, java)
 endif
 
 .PHONY: all
