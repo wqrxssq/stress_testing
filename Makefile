@@ -24,8 +24,13 @@ else ifeq ($(RUN_LANG),go)
 	SMART     ?= src/runners/go-runner/smart-solution.go
 	GENERATOR ?= src/runners/go-runner/generator.go
 	CHECKER   ?= src/runners/go-runner/advanced-checker.go
+else ifeq ($(RUN_LANG),java)
+	NAIVE	 ?= src/runners/java-runner/naive-solution.java
+	SMART	 ?= src/runners/java-runner/smart-solution.java
+	GENERATOR ?= src/runners/java-runner/generator.java
+	CHECKER   ?= src/runners/java-runner/advanced-checker.java
 else
-$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c, go)
+$(error Unsupported value for RUN_LANG: '$(RUN_LANG)'. Supported: cpp, py, c, go, java)
 endif
 
 .PHONY: all

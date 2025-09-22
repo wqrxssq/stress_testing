@@ -13,5 +13,7 @@ std::unique_ptr<LanguageCompiler> CompilerFactory::FromPath(const std::string& f
             return std::make_unique<CCompiler>();
         case Language::Go:
             return std::make_unique<GoCompiler>();
+        case Language::Java:
+            return std::make_unique<JavaCompiler>();
     }
 }

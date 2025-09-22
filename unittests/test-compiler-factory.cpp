@@ -29,6 +29,13 @@ TEST(TestCompilerFactory, TestGoPath) {
     EXPECT_EQ(typeid(compiler), typeid(GoCompiler));
 }
 
+TEST(TestCompilerFactory, TestJavaPath) {
+    std::string path_to_file = "src/java-runner/generator.java";
+    auto compiler_ptr = CompilerFactory::FromPath(path_to_file);
+    auto& compiler = *compiler_ptr;
+    EXPECT_EQ(typeid(compiler), typeid(JavaCompiler));
+}
+
 TEST(TestCompilerFactory, TestBadPath) {
     std::string path_to_file = "dummy.txt";
     EXPECT_ANY_THROW(CompilerFactory::FromPath(path_to_file));
